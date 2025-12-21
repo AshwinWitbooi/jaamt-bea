@@ -38,7 +38,10 @@ class JaatmUserRepositoryTests {
 		
 		Optional<JaatmUser> userResult = userRepository.findById(Long.valueOf(1L));
 		
+		//assert user not null
 		assertNotNull(userResult.get());
+		//assert user balance not null
+		assertNotNull(userResult.get().getAccount());
 		
 		userResult.orElseThrow(() -> new NullPointerException("No record found."));
 	}
