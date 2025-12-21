@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+
+import za.co.ashtech.jaatm.bea.model.JaatmAccount;
 import za.co.ashtech.jaatm.bea.model.JaatmUser;
 
 /*
@@ -27,8 +29,12 @@ class JaatmUserRepositoryTests {
 		//assert repository is not null
 		assertNotNull(userRepository);
 		
+		//Create and set user and account model object
+		JaatmUser juuser = new JaatmUser("JUID", "FIRSTNAME", "LASTNAME");
+		juuser.setAccount(new JaatmAccount(Long.getLong("12236666969"), "ACTIVE"));
+		
 		//save entity
-		userRepository.save(new JaatmUser("JUID", "FIRSTNAME", "LASTNAME"));
+		userRepository.save(juuser);
 		
 		Optional<JaatmUser> userResult = userRepository.findById(Long.valueOf(1L));
 		

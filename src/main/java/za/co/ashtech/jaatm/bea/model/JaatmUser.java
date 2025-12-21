@@ -24,6 +24,14 @@ public class JaatmUser {
 
     @Column(name = "LASTNAME", nullable = false, length = 100)
     private String lastName;
+    
+    @OneToOne(
+	            mappedBy = "user",
+	            cascade = CascadeType.ALL,
+	            orphanRemoval = true,
+	            fetch = FetchType.LAZY
+    		 )
+    private JaatmAccount account;
 
     // ---------------- Constructors ----------------
 
@@ -64,6 +72,17 @@ public class JaatmUser {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+    
+    public JaatmAccount getAccount() {
+        return account;
+    }
+
+    public void setAccount(JaatmAccount account) {
+        this.account = account;
+        if (account != null) {
+            account.setUser(this);
+        }
     }
 }
 
