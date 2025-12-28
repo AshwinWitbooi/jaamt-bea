@@ -1,8 +1,12 @@
 package za.co.ashtech.jaatm.bea.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import za.co.ashtech.jaatm.bea.dto.GetAccountResponse;
 import za.co.ashtech.jaatm.bea.model.JaatmUser;
 import za.co.ashtech.jaatm.bea.repository.JaatmUserRepository;
 
@@ -13,15 +17,24 @@ public class ViewAccountBalanceImpl implements IViewAccountBalance {
 	private JaatmUserRepository jaatmUserRepository;
 
 	@Override
-	public String getAccountBalance(String juid) {
+	public GetAccountResponse getAccountBalance(String juid) {
+		
+		GetAccountResponse getAccountResponse = null;
 		
 		/*
 		 * Get JAATM_USER by JUID or throw a NullPointer exception 
 		 */
 		JaatmUser jaatmUser = jaatmUserRepository.findByJuid(juid).orElseThrow(() -> new NullPointerException("No user record found."));
 		
-		//return balance as String
-		return Long.toString(jaatmUser.getAccount().getBalance());
+		//Initialize response after user successfully returned
+		getAccountResponse = new GetAccountResponse();
+		getAccountResponse.setJuid(jaatmUser.getJuid());
+		//convert cents to SARand
+		BigDecimal amountInCents = new BigDecimal(jaatmUser.getAccount().getBalance());
+		getAccountResponse.setAccountBalance(amountInCents.divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP).toPlainString());
+		
+		//return account balance DTO
+		return getAccountResponse;
 	}
 
 }
