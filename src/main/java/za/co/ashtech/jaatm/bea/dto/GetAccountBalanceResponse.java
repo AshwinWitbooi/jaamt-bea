@@ -14,7 +14,7 @@ import jakarta.validation.Valid;
 
 @JsonTypeName("_get_account_response")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-26T15:33:20.126202100+02:00[Africa/Johannesburg]")
-public class GetAccountResponse {
+public class GetAccountBalanceResponse {
 
 	  private Result result;
 
@@ -23,7 +23,7 @@ public class GetAccountResponse {
   private String accountBalance;
 
 
-  public GetAccountResponse juid(String juid) {
+  public GetAccountBalanceResponse juid(String juid) {
     this.juid = juid;
     return this;
   }
@@ -43,7 +43,7 @@ public class GetAccountResponse {
     this.juid = juid;
   }
 
-  public GetAccountResponse accountBalance(String accountBalance) {
+  public GetAccountBalanceResponse accountBalance(String accountBalance) {
     this.accountBalance = accountBalance;
     return this;
   }
@@ -63,7 +63,7 @@ public class GetAccountResponse {
     this.accountBalance = accountBalance;
   }
 
-  public GetAccountResponse result(Result result) {
+  public GetAccountBalanceResponse result(Result result) {
     this.result = result;
     return this;
   }
@@ -91,7 +91,7 @@ public class GetAccountResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    GetAccountResponse getAccountResponse = (GetAccountResponse) o;
+    GetAccountBalanceResponse getAccountResponse = (GetAccountBalanceResponse) o;
     return Objects.equals(this.juid, getAccountResponse.juid) &&
         Objects.equals(this.accountBalance, getAccountResponse.accountBalance) &&
         Objects.equals(this.result, getAccountResponse.result);

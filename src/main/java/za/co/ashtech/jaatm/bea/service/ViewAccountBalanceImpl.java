@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import za.co.ashtech.jaatm.bea.dto.GetAccountResponse;
+import za.co.ashtech.jaatm.bea.dto.GetAccountBalanceResponse;
 import za.co.ashtech.jaatm.bea.model.JaatmUser;
 import za.co.ashtech.jaatm.bea.repository.JaatmUserRepository;
 
@@ -17,9 +17,9 @@ public class ViewAccountBalanceImpl implements IViewAccountBalance {
 	private JaatmUserRepository jaatmUserRepository;
 
 	@Override
-	public GetAccountResponse getAccountBalance(String juid) {
+	public GetAccountBalanceResponse getAccountBalance(String juid) {
 		
-		GetAccountResponse getAccountResponse = null;
+		GetAccountBalanceResponse getAccountResponse = null;
 		
 		/*
 		 * Get JAATM_USER by JUID or throw a NullPointer exception 
@@ -27,7 +27,7 @@ public class ViewAccountBalanceImpl implements IViewAccountBalance {
 		JaatmUser jaatmUser = jaatmUserRepository.findByJuid(juid).orElseThrow(() -> new NullPointerException("No user record found."));
 		
 		//Initialize response after user successfully returned
-		getAccountResponse = new GetAccountResponse();
+		getAccountResponse = new GetAccountBalanceResponse();
 		getAccountResponse.setJuid(jaatmUser.getJuid());
 		//convert cents to SARand
 		BigDecimal amountInCents = new BigDecimal(jaatmUser.getAccount().getBalance());

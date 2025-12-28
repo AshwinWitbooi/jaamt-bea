@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.NativeWebRequest;
 import jakarta.annotation.Generated;
-import za.co.ashtech.jaatm.bea.dto.GetAccountResponse;
+import za.co.ashtech.jaatm.bea.dto.GetAccountBalanceResponse;
 import za.co.ashtech.jaatm.bea.dto.Result;
 import za.co.ashtech.jaatm.bea.service.IViewAccountBalance;
 
@@ -32,7 +32,7 @@ public class AccountApiController implements AccountApi {
     }
 
 	@Override
-	public ResponseEntity<GetAccountResponse> getAccountBalance(String juid) {
+	public ResponseEntity<GetAccountBalanceResponse> getAccountBalance(String juid) {
 				
 		return ResponseEntity.ok(viewAccountBalance.getAccountBalance(juid));
 	}
