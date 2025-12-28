@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.NativeWebRequest;
 import jakarta.annotation.Generated;
 import za.co.ashtech.jaatm.bea.dto.GetAccountBalanceResponse;
-import za.co.ashtech.jaatm.bea.dto.Result;
 import za.co.ashtech.jaatm.bea.service.IViewAccountBalance;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-26T15:33:20.126202100+02:00[Africa/Johannesburg]")
