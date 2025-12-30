@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Generated;
 import za.co.ashtech.jaatm.bea.dto.GetAccountBalanceResponse;
+import za.co.ashtech.jaatm.bea.util.JaatmOperationException;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-26T15:33:20.126202100+02:00[Africa/Johannesburg]")
 @Validated
@@ -53,5 +54,5 @@ public interface AccountApi {
         produces = { "application/json" }
     )
     
-    ResponseEntity<GetAccountBalanceResponse> getAccountBalance(@Parameter(name = "juid", description = "", required = true, in = ParameterIn.PATH) @PathVariable("juid") String juid);
+    ResponseEntity<GetAccountBalanceResponse> getAccountBalance(@Parameter(name = "juid", description = "", required = true, in = ParameterIn.PATH) @PathVariable("juid") String juid) throws JaatmOperationException ;
 }

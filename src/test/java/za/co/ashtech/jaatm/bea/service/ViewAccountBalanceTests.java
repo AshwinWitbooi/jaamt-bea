@@ -16,6 +16,7 @@ import za.co.ashtech.jaatm.bea.dto.GetAccountBalanceResponse;
 import za.co.ashtech.jaatm.bea.model.JaatmAccount;
 import za.co.ashtech.jaatm.bea.model.JaatmUser;
 import za.co.ashtech.jaatm.bea.repository.JaatmUserRepository;
+import za.co.ashtech.jaatm.bea.util.UserNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
 @Slf4j
@@ -49,7 +50,7 @@ class ViewAccountBalanceTests {
 	@Test
 	void testAccountBalanceJuidNull() {
 
-		assertThrows(NullPointerException.class, () -> {
+		assertThrows(UserNotFoundException.class, () -> {
 			accountBalance.getAccountBalance(null);
 		});
 

@@ -10,6 +10,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import jakarta.annotation.Generated;
 import za.co.ashtech.jaatm.bea.dto.GetAccountBalanceResponse;
 import za.co.ashtech.jaatm.bea.service.IViewAccountBalance;
+import za.co.ashtech.jaatm.bea.util.JaatmOperationException;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-26T15:33:20.126202100+02:00[Africa/Johannesburg]")
 @Controller
@@ -31,7 +32,7 @@ public class AccountApiController implements AccountApi {
     }
 
 	@Override
-	public ResponseEntity<GetAccountBalanceResponse> getAccountBalance(String juid) {
+	public ResponseEntity<GetAccountBalanceResponse> getAccountBalance(String juid) throws JaatmOperationException {
 				
 		return ResponseEntity.ok(viewAccountBalance.getAccountBalance(juid));
 	}
