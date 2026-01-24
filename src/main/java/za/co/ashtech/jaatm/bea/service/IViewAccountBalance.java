@@ -1,9 +1,9 @@
 package za.co.ashtech.jaatm.bea.service;
 
-import za.co.ashtech.jaatm.bea.dto.GetAccountBalanceResponse;
+import za.co.ashtech.jaatm.bea.dto.Account;
 
 public interface IViewAccountBalance {
 	
-	GetAccountBalanceResponse getAccountBalance(String juid);
+	Account getAccountBalance(String juid);
 
 }
