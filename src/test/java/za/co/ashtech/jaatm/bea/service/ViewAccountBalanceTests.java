@@ -12,7 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import lombok.extern.slf4j.Slf4j;
-import za.co.ashtech.jaatm.bea.dto.GetAccountBalanceResponse;
+import za.co.ashtech.jaatm.bea.dto.Account;
 import za.co.ashtech.jaatm.bea.model.JaatmAccount;
 import za.co.ashtech.jaatm.bea.model.JaatmUser;
 import za.co.ashtech.jaatm.bea.repository.JaatmUserRepository;
@@ -40,9 +40,9 @@ class ViewAccountBalanceTests {
 
 		when(jaatmUserRepository.findByJuid("JAATM-U001")).thenReturn(optionalUser);
 		
-		GetAccountBalanceResponse accountBalanceResponse = accountBalance.getAccountBalance("JAATM-U001");
+		Account accountBalanceResponse = accountBalance.getAccountBalance("JAATM-U001");
 		
-		log.info("BALANCE AMOUNT:" + new BigDecimal(accountBalanceResponse.getAccountBalance()).divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP));
+		log.info("BALANCE AMOUNT:" + new BigDecimal(accountBalanceResponse.getBalance()).divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP));
 
 		assertNotNull(accountBalanceResponse);
 	}
@@ -55,5 +55,9 @@ class ViewAccountBalanceTests {
 		});
 
 	}
+	
+	
+	
+	
 
 }

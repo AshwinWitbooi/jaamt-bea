@@ -2,11 +2,9 @@ package za.co.ashtech.jaatm.bea.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import za.co.ashtech.jaatm.bea.dto.GetAccountBalanceResponse;
+import za.co.ashtech.jaatm.bea.dto.Account;
 import za.co.ashtech.jaatm.bea.model.JaatmUser;
 import za.co.ashtech.jaatm.bea.repository.JaatmUserRepository;
 import za.co.ashtech.jaatm.bea.util.JaatmOperationException;
@@ -20,9 +18,9 @@ public class ViewAccountBalanceImpl implements IViewAccountBalance {
 	private JaatmUserRepository jaatmUserRepository;
 
 	@Override
-	public GetAccountBalanceResponse getAccountBalance(String juid){
+	public Account getAccountBalance(String juid){
 		
-		GetAccountBalanceResponse getAccountResponse = null;
+		Account account = null;
 		
 		try {
 			/*
@@ -30,12 +28,13 @@ public class ViewAccountBalanceImpl implements IViewAccountBalance {
 			 */
 			JaatmUser jaatmUser = jaatmUserRepository.findByJuid(juid).orElseThrow(() -> new UserNotFoundException(juid));
 			
-			//Initialize response after user successfully returned
-			getAccountResponse = new GetAccountBalanceResponse();
-			getAccountResponse.setJuid(jaatmUser.getJuid());
-			//convert cents to SARand
+			
+			// Create BigDecimal to handle converting cents and SA Rands
 			BigDecimal amountInCents = new BigDecimal(jaatmUser.getAccount().getBalance());
-			getAccountResponse.setAccountBalance(amountInCents.divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP).toPlainString());
+			
+			//Initialize response after user successfully returned
+			account = new Account(jaatmUser.getAccount().getStatus(),amountInCents.divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP).toPlainString());
+
 		} catch (UserNotFoundException e) {
 			throw e;
 		}catch (Exception e) {
@@ -43,7 +42,7 @@ public class ViewAccountBalanceImpl implements IViewAccountBalance {
 		}
 		
 		//return account balance DTO
-		return getAccountResponse;
+		return account;
 	}
 
 }
