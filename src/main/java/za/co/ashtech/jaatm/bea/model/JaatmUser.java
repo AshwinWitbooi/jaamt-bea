@@ -1,5 +1,7 @@
 package za.co.ashtech.jaatm.bea.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -25,6 +27,9 @@ public class JaatmUser {
     @Column(name = "LASTNAME", nullable = false, length = 100)
     private String lastName;
     
+    @Column(name = "DOB", nullable = false)
+    private LocalDate dob;
+    
     @OneToOne(
 	            mappedBy = "user",
 	            cascade = CascadeType.ALL,
@@ -32,7 +37,13 @@ public class JaatmUser {
 	            fetch = FetchType.LAZY
     		 )
     private JaatmAccount account;
-
+    @OneToOne(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+		 )
+    private JaatmAddress address;
     // ---------------- Constructors ----------------
 
     public JaatmUser() {
@@ -73,8 +84,16 @@ public class JaatmUser {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
-    public JaatmAccount getAccount() {
+        
+    public LocalDate getDob() {
+		return dob;
+	}
+
+	public void setDob(LocalDate dob) {
+		this.dob = dob;
+	}
+
+	public JaatmAccount getAccount() {
         return account;
     }
 
@@ -84,5 +103,13 @@ public class JaatmUser {
             account.setUser(this);
         }
     }
+
+	public JaatmAddress getAddress() {
+		return address;
+	}
+
+	public void setAddress(JaatmAddress address) {
+		this.address = address;
+	}
 }
 

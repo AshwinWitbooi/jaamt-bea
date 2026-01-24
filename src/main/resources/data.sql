@@ -1,17 +1,17 @@
 -- =========================
 -- JAATM_USER DATA (10 rows)
 -- =========================
-INSERT INTO JAATM_USER (JUID, FIRSTNAME, LASTNAME) VALUES
-('JAATM-U001', 'John', 'Doe'),
-('JAATM-U002', 'Jane', 'Smith'),
-('JAATM-U003', 'Michael', 'Brown'),
-('JAATM-U004', 'Emily', 'Johnson'),
-('JAATM-U005', 'David', 'Wilson'),
-('JAATM-U006', 'Sarah', 'Miller'),
-('JAATM-U007', 'Daniel', 'Taylor'),
-('JAATM-U008', 'Laura', 'Anderson'),
-('JAATM-U009', 'Robert', 'Thomas'),
-('JAATM-U010', 'Olivia', 'Jackson');
+INSERT INTO JAATM_USER (JUID, FIRSTNAME, LASTNAME, DOB) VALUES
+('JAATM-U001', 'John', 'Doe',DATE '1993-11-01'),
+('JAATM-U002', 'Jane', 'Smith',DATE '1973-03-12'),
+('JAATM-U003', 'Michael', 'Brown',DATE '1993-12-13'),
+('JAATM-U004', 'Emily', 'Johnson',DATE '1963-01-01'),
+('JAATM-U005', 'David', 'Wilson',DATE '1969-04-01'),
+('JAATM-U006', 'Sarah', 'Miller',DATE '1989-09-17'),
+('JAATM-U007', 'Daniel', 'Taylor',DATE '1996-08-06'),
+('JAATM-U008', 'Laura', 'Anderson',DATE '1998-09-18'),
+('JAATM-U009', 'Robert', 'Thomas',DATE '1954-05-01'),
+('JAATM-U010', 'Olivia', 'Jackson',DATE '1968-11-02');
 
 -- =========================
 -- JAATM_ACCOUNT DATA (10 rows)
