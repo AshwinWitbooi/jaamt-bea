@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+
+import java.time.LocalDate;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import lombok.extern.slf4j.Slf4j;
-import za.co.ashtech.jaatm.bea.dto.Account;
 import za.co.ashtech.jaatm.bea.dto.User;
 import za.co.ashtech.jaatm.bea.model.JaatmAccount;
 import za.co.ashtech.jaatm.bea.model.JaatmAddress;
@@ -35,7 +34,7 @@ class ViewUserAccountTests {
 	void testUserAccount() {
 		
 		//Create mocked database model
-		JaatmUser jaatmUser001= new JaatmUser("JAATM-U001","John", "Queue");
+		JaatmUser jaatmUser001= new JaatmUser("JAATM-U001","John", "Queue",LocalDate.of(1988, 12, 3));
 		jaatmUser001.setAddress(new JaatmAddress("111", "Akkerboom Straat", "Belhong", "Cape Town", "WC", "7963", jaatmUser001));
 		jaatmUser001.setAccount(new JaatmAccount(Long.valueOf("1623366"), "Active"));
 		

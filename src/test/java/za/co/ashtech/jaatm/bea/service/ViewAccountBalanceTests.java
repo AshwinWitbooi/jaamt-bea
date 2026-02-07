@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,7 +33,7 @@ class ViewAccountBalanceTests {
 	void testAccountBalance() {
 		
 		//Create mocked database model
-		JaatmUser jaatmUser001= new JaatmUser("JAATM-U001","John", "Queue");
+		JaatmUser jaatmUser001= new JaatmUser("JAATM-U001","John", "Queue",LocalDate.of(1968, 2, 10));
 		jaatmUser001.setAccount(new JaatmAccount(Long.valueOf("1623366"), "Active"));
 		
 		//Create optional user object
