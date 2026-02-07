@@ -3,6 +3,7 @@ package za.co.ashtech.jaatm.bea.repository;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.time.LocalDate;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ class JaatmUserRepositoryTests {
 		assertNotNull(userRepository);
 		
 		//Create and set user and account model object
-		JaatmUser juuser = new JaatmUser("JUID", "FIRSTNAME", "LASTNAME");
+		JaatmUser juuser = new JaatmUser("JUID", "FIRSTNAME", "LASTNAME",LocalDate.of(1973, 3, 22));
 		juuser.setAccount(new JaatmAccount(Long.getLong("12236666969"), "ACTIVE"));
 		
 		//save entity
@@ -53,7 +54,7 @@ class JaatmUserRepositoryTests {
 		
 		assertThrows(DataIntegrityViolationException.class, () -> {
 			//save entity
-			userRepository.save(new JaatmUser("JUID", null, "LASTNAME"));
+			userRepository.save(new JaatmUser("JUID", null, "LASTNAME",LocalDate.of(1973, 3, 22)));
 		});
 	}
 	
