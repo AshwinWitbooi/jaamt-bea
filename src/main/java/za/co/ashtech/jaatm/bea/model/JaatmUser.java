@@ -49,10 +49,11 @@ public class JaatmUser {
     public JaatmUser() {
     }
 
-    public JaatmUser(String juid, String firstName, String lastName) {
+    public JaatmUser(String juid, String firstName, String lastName, LocalDate dob) {
         this.juid = juid;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.dob = dob;
     }
 
     // ---------------- Getters & Setters ----------------

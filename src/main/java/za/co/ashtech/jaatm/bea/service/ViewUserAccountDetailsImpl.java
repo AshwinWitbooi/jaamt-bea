@@ -47,6 +47,7 @@ public class ViewUserAccountDetailsImpl implements IViewUserAccountDetails {
 			apiUserResponse.setDob(jaatmUser.getDob());
 			apiUserResponse.setFirstname(jaatmUser.getFirstName());
 			apiUserResponse.setLastname(jaatmUser.getLastName());
+			apiUserResponse.setJuid(jaatmUser.getJuid());
 
 		} catch (UserNotFoundException e) {
 			throw e;
