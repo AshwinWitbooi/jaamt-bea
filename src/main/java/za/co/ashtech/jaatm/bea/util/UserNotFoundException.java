@@ -8,6 +8,6 @@ public class UserNotFoundException extends JaatmApiException {
 	private static final long serialVersionUID = 1L;
 
 	public UserNotFoundException(String juid) {
-		super("User not found: " + juid, HttpStatus.NOT_FOUND, Jaatm_Constants.ERROR_CODE_1);
+		super("User not found: " + juid, HttpStatus.NOT_FOUND, JaatmConstants.ERROR_CODE_1);
 	}
 }

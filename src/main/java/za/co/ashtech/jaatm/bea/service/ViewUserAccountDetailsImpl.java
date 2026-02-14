@@ -12,7 +12,7 @@ import za.co.ashtech.jaatm.bea.model.JaatmAddress;
 import za.co.ashtech.jaatm.bea.model.JaatmUser;
 import za.co.ashtech.jaatm.bea.repository.JaatmUserRepository;
 import za.co.ashtech.jaatm.bea.util.JaatmOperationException;
-import za.co.ashtech.jaatm.bea.util.Jaatm_Constants;
+import za.co.ashtech.jaatm.bea.util.JaatmConstants;
 import za.co.ashtech.jaatm.bea.util.UserNotFoundException;
 
 @Service
@@ -52,7 +52,7 @@ public class ViewUserAccountDetailsImpl implements IViewUserAccountDetails {
 		} catch (UserNotFoundException e) {
 			throw e;
 		}catch (Exception e) {
-			throw new JaatmOperationException(Jaatm_Constants.ERROR_CODE_100);
+			throw new JaatmOperationException(JaatmConstants.ERROR_CODE_100);
 		}
 		
 		//return account balance DTO
