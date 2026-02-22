@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(
-    name = "JAATM_ACCOUNT",
+    name = "jaatm_account",
     uniqueConstraints = {
         @UniqueConstraint(
             columnNames = "JAATM_USER_ID"
@@ -15,21 +15,21 @@ public class JaatmAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "BALANCE", length = 50)
+    @Column(name = "balance", length = 50)
     private Long balance;
 
-    @Column(name = "STATUS", length = 20)
+    @Column(name = "status", length = 20)
     private String status;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(
-        name = "JAATM_USER_ID",
+        name = "jaatm_user_id",
         nullable = false,
         unique = true,
-        foreignKey = @ForeignKey(name = "FK_ACCOUNT_USER")
+        foreignKey = @ForeignKey(name = "fk_account_user")
     )
     private JaatmUser user;
 

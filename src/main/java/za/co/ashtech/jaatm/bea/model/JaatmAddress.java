@@ -3,37 +3,37 @@ package za.co.ashtech.jaatm.bea.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "JAATM_ADDRESS")
+@Table(name = "jaatm_address")
 public class JaatmAddress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "STREET_NUMBER", length = 20)
+    @Column(name = "street_number", length = 20)
     private String streetNumber;
 
-    @Column(name = "STREET_NAME", length = 150)
+    @Column(name = "street_name", length = 150)
     private String streetName;
 
-    @Column(name = "TOWN", length = 100)
+    @Column(name = "town", length = 100)
     private String town;
 
-    @Column(name = "CITY", length = 100)
+    @Column(name = "city", length = 100)
     private String city;
 
-    @Column(name = "PROVINCE", length = 100)
+    @Column(name = "province", length = 100)
     private String province;
 
-    @Column(name = "POSTAL_CODE", length = 20)
+    @Column(name = "postal_code", length = 20)
     private String postalCode;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(
-        name = "JAATM_USER_ID",
+        name = "jaatm_user_id",
         nullable = false,
         unique = true,
-        foreignKey = @ForeignKey(name = "FK_ACCOUNT_USER")
+        foreignKey = @ForeignKey(name = "fk_address_user")
     )
     private JaatmUser user;
 
@@ -42,14 +42,13 @@ public class JaatmAddress {
     }
 
     public JaatmAddress(String streetNumber, String streetName, String town,
-                        String city, String province, String postalCode, JaatmUser user) {
+                        String city, String province, String postalCode) {
         this.streetNumber = streetNumber;
         this.streetName = streetName;
         this.town = town;
         this.city = city;
         this.province = province;
         this.postalCode = postalCode;
-        this.user = user;
     }
 
     // Getters and Setters

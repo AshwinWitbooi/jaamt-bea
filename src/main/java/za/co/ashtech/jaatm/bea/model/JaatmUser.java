@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(
-    name = "JAATM_USER",
+    name = "jaatm_user",
     uniqueConstraints = {
         @UniqueConstraint(columnNames = "JUID")
     }
@@ -15,19 +15,19 @@ public class JaatmUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false, updatable = false)
+    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "JUID", nullable = false, unique = true, length = 50)
+    @Column(name = "juid", nullable = false, unique = true, length = 50)
     private String juid;
 
-    @Column(name = "FIRSTNAME", nullable = false, length = 100)
+    @Column(name = "firstname", nullable = false, length = 100)
     private String firstName;
 
-    @Column(name = "LASTNAME", nullable = false, length = 100)
+    @Column(name = "lastname", nullable = false, length = 100)
     private String lastName;
     
-    @Column(name = "DOB", nullable = false)
+    @Column(name = "dob", nullable = false)
     private LocalDate dob;
     
     @OneToOne(
