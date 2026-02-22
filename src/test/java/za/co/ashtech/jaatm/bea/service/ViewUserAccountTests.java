@@ -35,7 +35,7 @@ class ViewUserAccountTests {
 		
 		//Create mocked database model
 		JaatmUser jaatmUser001= new JaatmUser("JAATM-U001","John", "Queue",LocalDate.of(1988, 12, 3));
-		jaatmUser001.setAddress(new JaatmAddress("111", "Akkerboom Straat", "Belhong", "Cape Town", "WC", "7963", jaatmUser001));
+		jaatmUser001.setAddress(new JaatmAddress("111", "Akkerboom Straat", "Belhong", "Cape Town", "WC", "7963"));
 		jaatmUser001.setAccount(new JaatmAccount(Long.valueOf("1623366"), "Active"));
 		
 		//Create optional user object
