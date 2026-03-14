@@ -32,11 +32,14 @@ public class RequestResponseLoggingFilter extends OncePerRequestFilter {
         ContentCachingResponseWrapper wrappedResponse =
                 new ContentCachingResponseWrapper(response);
         
-        //Ensure traceId has been set
-        final String traceId = Optional.ofNullable(wrappedRequest.getHeader("traceId")).orElseThrow(() -> new NullPointerException("Missing HTTP header: traceId"));
+        //only check traceId header for api request
+        if(request.getRequestURI().contains("/jaatm-bea/api/")) {
+            //Ensure traceId has been set
+            final String traceId = Optional.ofNullable(wrappedRequest.getHeader("traceId")).orElseThrow(() -> new NullPointerException("Missing HTTP header: traceId"));
 
-        MDC.put("traceId", traceId);
-        
+            MDC.put("traceId", traceId);       	
+        }
+         
         long startTime = System.currentTimeMillis();
 
         filterChain.doFilter(wrappedRequest, wrappedResponse);
