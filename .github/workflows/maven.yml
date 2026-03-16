@@ -32,8 +32,9 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USR }}
         password: ${{ secrets.DOCKERHUB_TKN }}
-    - name: Build and Push Docker image
-      uses: docker/build-push-action@v5
-      with:
-        push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/jaatm-bea:latest
+    - name: Build Docker image
+      run: |
+        docker build -t ashwindocker8899/jaatm-bea:latest .
+    - name: Push Docker image
+      run: |
+        docker push ashwindocker8899/jaatm-bea:latest
