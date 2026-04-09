@@ -61,3 +61,7 @@ src
 ├── dto           # Data transfer objects
 ├── exception     # Custom exceptions & handlers
 └── config        # Application configuration
+```
+
+## Documentation
+https://ashwinwitbooi.github.io/jaamt-bea-docs/
