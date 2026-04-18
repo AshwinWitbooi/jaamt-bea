@@ -11,7 +11,7 @@ import za.co.ashtech.jaatm.bea.util.JaatmConstants;
 import za.co.ashtech.jaatm.bea.util.UserNotFoundException;
 
 @Service
-public class ViewAccountBalanceImpl implements IViewAccountBalance {
+public class ViewAccountBalanceImpl implements ViewAccountBalance {
 	
 	private JaatmUserRepository jaatmUserRepository;
 	

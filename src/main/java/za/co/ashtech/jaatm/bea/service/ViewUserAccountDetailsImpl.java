@@ -15,7 +15,7 @@ import za.co.ashtech.jaatm.bea.util.JaatmConstants;
 import za.co.ashtech.jaatm.bea.util.UserNotFoundException;
 
 @Service
-public class ViewUserAccountDetailsImpl implements IViewUserAccountDetails {
+public class ViewUserAccountDetailsImpl implements ViewUserAccountDetails {
 	
 	private JaatmUserRepository jaatmUserRepository;
 	
@@ -54,8 +54,6 @@ public class ViewUserAccountDetailsImpl implements IViewUserAccountDetails {
 			apiUserResponse.setLastname(jaatmUser.getLastName());
 			apiUserResponse.setJuid(jaatmUser.getJuid());
 
-		} catch (UserNotFoundException e) {
-			throw e;
 		}catch (Exception e) {
 			throw new JaatmOperationException(JaatmConstants.ERROR_CODE_100);
 		}
