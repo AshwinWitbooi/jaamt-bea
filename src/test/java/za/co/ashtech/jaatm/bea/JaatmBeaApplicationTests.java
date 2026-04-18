@@ -1,6 +1,8 @@
 package za.co.ashtech.jaatm.bea;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -66,7 +68,7 @@ class JaatmBeaApplicationTests extends  BaseUnitTest{
 		
 		// 3. Call exchange
 		ResponseEntity<User> response = restTemplate.exchange(
-		        "/api/v1/account/JAATM-U001",
+		        "/api/v1/user/JAATM-U001",
 		        HttpMethod.GET,
 		        entity,
 		        User.class
@@ -75,6 +77,50 @@ class JaatmBeaApplicationTests extends  BaseUnitTest{
         log.debug("--->>>:::	"+response.getStatusCode());
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+	}
+	
+	@Test
+	void updateUserAccount() {
+		
+		// 2. Wrap headers in HttpEntity (no body for GET)
+		HttpEntity<Object> getUserentity = new HttpEntity<>(getHeaders());
+		
+		// 3. Call exchange
+		ResponseEntity<User> getUserResponse = restTemplate.exchange(
+		        "/api/v1/user/JAATM-U001",
+		        HttpMethod.GET,
+		        getUserentity,
+		        User.class
+		);
+		
+		User userDetails = getUserResponse.getBody();
+		userDetails.setFirstname("Updated Name");
+		
+		HttpEntity<Object> entity = new HttpEntity<>(userDetails,getHeaders());
+		
+		// 3. Call exchange
+		ResponseEntity<Void> response = restTemplate.exchange(
+		        "/api/v1/user/JAATM-U001",
+		        HttpMethod.PUT,
+		        entity,
+		        Void.class
+		);
+		        
+        log.debug("--->>>:::	"+response.getStatusCode());
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        
+		// 3. Call exchange
+		ResponseEntity<User> postUpdategetUserResponse = restTemplate.exchange(
+		        "/api/v1/user/JAATM-U001",
+		        HttpMethod.GET,
+		        getUserentity,
+		        User.class
+		);
+		
+		//assert updated name
+		assertEquals( "Updated Name",postUpdategetUserResponse.getBody().getFirstname());
 	}
 	
 
