@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,12 +23,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
 import za.co.ashtech.jaatm.bea.dto.User;
 import za.co.ashtech.jaatm.bea.util.JaatmOperationException;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-01-08T20:28:19.081308300+02:00[Africa/Johannesburg]")
 @Validated
-@Tag(name = "user", description = "Everything about users")
+@Tag(name = "GetUser", description = "Everything about users")
 public interface UserApi {
 
 	default Optional<NativeWebRequest> getRequest() {
@@ -63,4 +66,33 @@ public interface UserApi {
         @Parameter(name = "juid", description = "", required = true, in = ParameterIn.PATH) @PathVariable("juid") String juid
     ) throws JaatmOperationException;
 
+    /**
+     * PUT /user/{juid} : Update account details for a given JUID
+     * Update the account details a for the specified JUID.
+     *
+     * @param juid  (required)
+     * @param user  (required)
+     * @return Successful update operation (status code 204)
+     *         or Invalid input (status code 400)
+     *         or Internal server error (status code 500)
+     */
+    @Operation(
+        operationId = "userJuidPut",
+        summary = "Update account details for a given JUID",
+        description = "Update the account details a for the specified JUID.",
+        tags = { "account" },
+        responses = {
+            @ApiResponse(responseCode = "204", description = "Successful update operation"),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+        }
+    )
+    @PutMapping(
+        value = "/user/{juid}",
+        consumes = { "application/json" }
+    )    
+    ResponseEntity<Void> userJuidPut(
+        @Parameter(name = "juid", description = "", required = true, in = ParameterIn.PATH) @PathVariable("juid") String juid,
+        @Parameter(name = "User", description = "", required = true) @Valid @RequestBody User user
+    );
 }
