@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
 import za.co.ashtech.jaatm.bea.dto.User;
-import za.co.ashtech.jaatm.bea.service.IViewUserAccountDetails;
+import za.co.ashtech.jaatm.bea.service.UpdateUserDetails;
+import za.co.ashtech.jaatm.bea.service.ViewUserAccountDetails;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-01-08T20:28:19.081308300+02:00[Africa/Johannesburg]")
 @Controller
@@ -17,11 +19,13 @@ import za.co.ashtech.jaatm.bea.service.IViewUserAccountDetails;
 public class UserApiController implements UserApi {
 
     private final NativeWebRequest request;
-    private final IViewUserAccountDetails userAccountDetails;
+    private final ViewUserAccountDetails userAccountDetails;
+    private final UpdateUserDetails updateUserDetails;
 
-    public UserApiController(NativeWebRequest request, IViewUserAccountDetails service) {
+    public UserApiController(NativeWebRequest request, ViewUserAccountDetails service, UpdateUserDetails updateUserDetails) {
         this.request = request;
         this.userAccountDetails = service;
+        this.updateUserDetails = updateUserDetails;
     }
 
     @Override
@@ -34,5 +38,13 @@ public class UserApiController implements UserApi {
     	
     	return ResponseEntity.ok(userAccountDetails.getUserAccount(juid));
     }
+
+	@Override
+	public ResponseEntity<Void> userJuidPut(String juid, @Valid User user) {
+
+		updateUserDetails.updateAccount(juid, user);
+	    return ResponseEntity.ok().build();
+		
+	}
 
 }

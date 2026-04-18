@@ -2,6 +2,7 @@ package za.co.ashtech.jaatm.bea.aop;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -41,6 +42,20 @@ public class GlobalApiErrorControllerAdvice {
         );
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+    
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiErrorResponse> handleValidationException(
+            MethodArgumentNotValidException ex) {
+    	
+        ApiErrorResponse response = new ApiErrorResponse(
+                HttpStatus.BAD_REQUEST,
+                "Invalid request. Please review and resent.",
+                JaatmConstants.ERROR_CODE_100
+        );
+
+    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        
     }
 }
 
