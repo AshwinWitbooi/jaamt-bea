@@ -1,14 +1,15 @@
 package za.co.ashtech.jaatm.bea.controller;
 
 import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.NativeWebRequest;
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
 import za.co.ashtech.jaatm.bea.dto.Account;
+import za.co.ashtech.jaatm.bea.dto.AccountOpRequest;
+import za.co.ashtech.jaatm.bea.service.AccountOperation;
 import za.co.ashtech.jaatm.bea.service.ViewAccountBalance;
 import za.co.ashtech.jaatm.bea.util.JaatmOperationException;
 
@@ -17,14 +18,15 @@ import za.co.ashtech.jaatm.bea.util.JaatmOperationException;
 @RequestMapping("/api/v1")
 public class AccountApiController implements AccountApi {
 
-    private final NativeWebRequest request;
+    private final NativeWebRequest request;    
+    private  final ViewAccountBalance viewAccountBalance;    
+    private  final AccountOperation accountOperation;
     
-    @Autowired
-    private  final ViewAccountBalance viewAccountBalance;
 
-    public AccountApiController(NativeWebRequest request, ViewAccountBalance viewAccountBalance) {
+    public AccountApiController(NativeWebRequest request, ViewAccountBalance viewAccountBalance,AccountOperation accountOperation) {
         this.request = request;
         this.viewAccountBalance = viewAccountBalance;
+        this.accountOperation = accountOperation;
     }
 
     @Override
@@ -36,6 +38,13 @@ public class AccountApiController implements AccountApi {
 	public ResponseEntity<Account> getAccountBalance(String juid) throws JaatmOperationException {
 				
 		return ResponseEntity.ok(viewAccountBalance.getAccountBalance(juid));
+	}
+
+	@Override
+	public ResponseEntity<Void> postAccountOperation(String juid, @Valid AccountOpRequest accountOpRequest) {
+			
+			accountOperation.performAccountOperation(juid, accountOpRequest);
+		    return ResponseEntity.ok().build();
 	}
 
 }

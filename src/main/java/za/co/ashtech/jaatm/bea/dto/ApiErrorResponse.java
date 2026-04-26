@@ -20,17 +20,13 @@ public class ApiErrorResponse {
 	@JsonProperty("status")
 	private HttpStatus status;
 	@JsonProperty("message")
-	private String message;
-	@JsonProperty("errorCode")
-	private String errorCode;	
-	
+	private String message;	
 
-	public ApiErrorResponse(HttpStatus status, String message, String errorCode) {
+	public ApiErrorResponse(HttpStatus status, String message) {
 		super();
 		this.timestamp = LocalDateTime.now().toString();
 		this.status = status;
 		this.message = message;
-		this.errorCode = errorCode;
 	}
 
 	@JsonProperty("timestamp")
@@ -63,13 +59,13 @@ public class ApiErrorResponse {
 		this.message = message;
 	}
 
-	@JsonProperty("errorCode")
-	public String getErrorCode() {
-		return errorCode;
-	}
-
-	@JsonProperty("errorCode")
-	public void setErrorCode(String errorCode) {
-		this.errorCode = errorCode;
-	}
+//	@JsonProperty("errorCode")
+//	public String getErrorCode() {
+//		return errorCode;
+//	}
+//
+//	@JsonProperty("errorCode")
+//	public void setErrorCode(String errorCode) {
+//		this.errorCode = errorCode;
+//	}
 }
