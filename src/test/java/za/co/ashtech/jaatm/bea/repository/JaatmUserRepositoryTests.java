@@ -29,7 +29,6 @@ class JaatmUserRepositoryTests {
 	@Autowired
 	JaatmUserRepository userRepository;
 	
-
 	@Test
 	void executeTest() {
 		//assert repository is not null
@@ -82,4 +81,5 @@ class JaatmUserRepositoryTests {
 			userRepository.save(null);
 		});
 	}
+
 }

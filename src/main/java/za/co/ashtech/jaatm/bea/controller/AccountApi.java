@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -19,7 +21,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
 import za.co.ashtech.jaatm.bea.dto.Account;
+import za.co.ashtech.jaatm.bea.dto.AccountOpRequest;
 import za.co.ashtech.jaatm.bea.util.JaatmOperationException;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-26T15:33:20.126202100+02:00[Africa/Johannesburg]")
@@ -55,4 +59,34 @@ public interface AccountApi {
     )
     
     ResponseEntity<Account> getAccountBalance(@Parameter(name = "juid", description = "", required = true, in = ParameterIn.PATH) @PathVariable("juid") String juid) throws JaatmOperationException ;
+
+    /**
+     * POST /account/{juid} : Deposit and Withdrawal of an amount against an user account
+     * Used for when a deposit and withdrawal will be made against a ussr account.
+     *
+     * @param juid  (required)
+     * @param accountJuidPostRequest  (required)
+     * @return Operation successfuly executed. (status code 200)
+     *         or Invalid input (status code 400)
+     *         or Server error (status code 500)
+     */
+    @Operation(
+        operationId = "accountJuidPost",
+        summary = "Deposit and Withdrawal of an amount against an user account",
+        description = "Used for when a deposit and withdrawal will be made against a ussr account.",
+        tags = { "account" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Operation successfuly executed."),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "500", description = "Server error")
+        }
+    )
+    @PostMapping(
+        value = "/account/{juid}",
+        consumes = { "application/json" }
+    )    
+    ResponseEntity<Void> postAccountOperation(
+        @Parameter(name = "juid", description = "", required = true, in = ParameterIn.PATH) @PathVariable("juid") String juid,
+        @Parameter(name = "AccountJuidPostRequest", description = "", required = true) @Valid @RequestBody AccountOpRequest accountOpRequest
+    );
 }
