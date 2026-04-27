@@ -14,6 +14,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      MYSQL_USR: ${{ secrets.MYSQL_USR }}
+      MYSQL_PSW: ${{ secrets.MYSQL_PSW }}
+
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
