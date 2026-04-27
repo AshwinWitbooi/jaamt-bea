@@ -16,7 +16,7 @@ jobs:
 
     env:
       MYSQL_USR: ${{ secrets.MYSQL_USR }}
-      MYSQL_PSW: ${{ secrets.MYSQL_PSW }}
+      MYSQL_PSW: ${{ secrets.MYSQL_PW }}
 
     steps:
     - uses: actions/checkout@v4
