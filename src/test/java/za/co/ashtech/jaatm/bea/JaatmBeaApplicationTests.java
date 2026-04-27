@@ -145,6 +145,27 @@ class JaatmBeaApplicationTests extends  BaseUnitTest{
 		assertEquals(HttpStatus.OK, getUserResponse.getStatusCode());
 		
 	}
+	
+	@Test
+	void userAccountWithdawal() {
+
+		AccountOpRequest accountOpRequest = new AccountOpRequest();
+		accountOpRequest.setAmount(Long.valueOf(5000));
+		accountOpRequest.setOperation(OperationEnum.WITHDRAWAL);
+		// 2. Wrap headers in HttpEntity (no body for GET)
+		HttpEntity<Object> getUserentity = new HttpEntity<>(accountOpRequest,getHeaders());
+		
+		// 3. Call exchange
+		ResponseEntity<Void> getUserResponse = restTemplate.exchange(
+		        "/api/v1/account/JUID0001",
+		        HttpMethod.POST,
+		        getUserentity,
+		        Void.class
+		);
+		
+		assertEquals(HttpStatus.OK, getUserResponse.getStatusCode());
+		
+	}
 
 
 }
