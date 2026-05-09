@@ -24,6 +24,7 @@ import jakarta.annotation.Generated;
 import jakarta.validation.Valid;
 import za.co.ashtech.jaatm.bea.dto.Account;
 import za.co.ashtech.jaatm.bea.dto.AccountOpRequest;
+import za.co.ashtech.jaatm.bea.dto.TransferRequest;
 import za.co.ashtech.jaatm.bea.util.JaatmOperationException;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-12-26T15:33:20.126202100+02:00[Africa/Johannesburg]")
@@ -88,5 +89,35 @@ public interface AccountApi {
     ResponseEntity<Void> postAccountOperation(
         @Parameter(name = "juid", description = "", required = true, in = ParameterIn.PATH) @PathVariable("juid") String juid,
         @Parameter(name = "AccountJuidPostRequest", description = "", required = true) @Valid @RequestBody AccountOpRequest accountOpRequest
+    );
+    
+    /**
+     * POST /account/transfer/{juid} : This API provides client applications functionality to transfer an amount into a chosen account.
+     * Used to transfer an amount into a chosen account.
+     *
+     * @param juid  (required)
+     * @param accountTransferJuidPostRequest  (required)
+     * @return Transfer successfuly executed. (status code 200)
+     *         or Invalid input (status code 400)
+     *         or Server error (status code 500)
+     */
+    @Operation(
+        operationId = "accountTransferJuidPost",
+        summary = "This API provides client applications functionality to transfer an amount into a chosen account.",
+        description = "Used to transfer an amount into a chosen account.",
+        tags = { "account" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Transfer successfuly executed."),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "500", description = "Server error")
+        }
+    )
+    @PostMapping(
+        value = "/account/transfer/{juid}",
+        consumes = { "application/json" }
+    )    
+    ResponseEntity<Void> accountTransferJuidPost(
+        @Parameter(name = "juid", description = "", required = true, in = ParameterIn.PATH) @PathVariable("juid") String juid,
+        @Parameter(name = "AccountTransferJuidPostRequest", description = "", required = true) @Valid @RequestBody TransferRequest transferRequest
     );
 }

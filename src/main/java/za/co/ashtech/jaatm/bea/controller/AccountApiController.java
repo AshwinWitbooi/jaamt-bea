@@ -9,7 +9,9 @@ import jakarta.annotation.Generated;
 import jakarta.validation.Valid;
 import za.co.ashtech.jaatm.bea.dto.Account;
 import za.co.ashtech.jaatm.bea.dto.AccountOpRequest;
+import za.co.ashtech.jaatm.bea.dto.TransferRequest;
 import za.co.ashtech.jaatm.bea.service.AccountOperation;
+import za.co.ashtech.jaatm.bea.service.AccountTransfer;
 import za.co.ashtech.jaatm.bea.service.ViewAccountBalance;
 import za.co.ashtech.jaatm.bea.util.JaatmOperationException;
 
@@ -21,15 +23,19 @@ public class AccountApiController implements AccountApi {
     private final NativeWebRequest request;    
     private  final ViewAccountBalance viewAccountBalance;    
     private  final AccountOperation accountOperation;
+    private  final AccountTransfer accountTransfer;
     
 
-    public AccountApiController(NativeWebRequest request, ViewAccountBalance viewAccountBalance,AccountOperation accountOperation) {
-        this.request = request;
-        this.viewAccountBalance = viewAccountBalance;
-        this.accountOperation = accountOperation;
-    }
+    public AccountApiController(NativeWebRequest request, ViewAccountBalance viewAccountBalance,
+			AccountOperation accountOperation, AccountTransfer accountTransfer) {
+		super();
+		this.request = request;
+		this.viewAccountBalance = viewAccountBalance;
+		this.accountOperation = accountOperation;
+		this.accountTransfer = accountTransfer;
+	}
 
-    @Override
+	@Override
     public Optional<NativeWebRequest> getRequest() {
         return Optional.ofNullable(request);
     }
@@ -45,6 +51,13 @@ public class AccountApiController implements AccountApi {
 			
 			accountOperation.performAccountOperation(juid, accountOpRequest);
 		    return ResponseEntity.ok().build();
+	}
+
+	@Override
+	public ResponseEntity<Void> accountTransferJuidPost(String juid, @Valid TransferRequest transferRequest) {
+		
+		accountTransfer.transfer(juid, transferRequest);
+		return ResponseEntity.ok().build();
 	}
 
 }

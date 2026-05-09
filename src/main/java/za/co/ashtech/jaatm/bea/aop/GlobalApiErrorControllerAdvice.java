@@ -1,5 +1,7 @@
 package za.co.ashtech.jaatm.bea.aop;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -14,10 +16,12 @@ import za.co.ashtech.jaatm.bea.util.UserNotFoundException;
 @RestControllerAdvice
 public class GlobalApiErrorControllerAdvice {
 	
+	private static final Logger controllerAdviceLogger = LoggerFactory.getLogger(GlobalApiErrorControllerAdvice.class);
+	
     @ExceptionHandler(OverDrawnBalanceException.class)
     public ResponseEntity<ApiErrorResponse> handleOverDrawnBalanceException(
     		OverDrawnBalanceException ex) {
-    	
+    	controllerAdviceLogger.error(ex.getMessage(), ex);
         ApiErrorResponse response = new ApiErrorResponse(
                 ex.getStatus(),
                 ex.getMessage()
@@ -30,6 +34,8 @@ public class GlobalApiErrorControllerAdvice {
     public ResponseEntity<ApiErrorResponse> handleApiException(
     		UserNotFoundException ex,
             HttpServletRequest request) {
+    	
+    	controllerAdviceLogger.error(ex.getMessage(), ex);
 
         ApiErrorResponse response = new ApiErrorResponse(
                 ex.getStatus(),
@@ -45,6 +51,8 @@ public class GlobalApiErrorControllerAdvice {
     public ResponseEntity<ApiErrorResponse> handleUnhandledException(
             Exception ex,
             HttpServletRequest request) {
+    	
+      	controllerAdviceLogger.error(ex.getMessage(), ex);
 
         ApiErrorResponse response = new ApiErrorResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR,
@@ -57,6 +65,8 @@ public class GlobalApiErrorControllerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponse> handleValidationException(
             MethodArgumentNotValidException ex) {
+    	
+      	controllerAdviceLogger.error(ex.getMessage(), ex);
     	
         ApiErrorResponse response = new ApiErrorResponse(
                 HttpStatus.BAD_REQUEST,
