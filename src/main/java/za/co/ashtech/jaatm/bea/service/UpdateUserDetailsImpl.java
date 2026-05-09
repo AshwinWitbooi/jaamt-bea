@@ -2,34 +2,27 @@ package za.co.ashtech.jaatm.bea.service;
 
 import java.time.LocalDate;
 import java.util.Optional;
-
 import org.springframework.stereotype.Service;
-
 import za.co.ashtech.jaatm.bea.dto.Address;
 import za.co.ashtech.jaatm.bea.dto.User;
 import za.co.ashtech.jaatm.bea.model.JaatmUser;
 import za.co.ashtech.jaatm.bea.repository.JaatmUserRepository;
 import za.co.ashtech.jaatm.bea.util.JaatmConstants;
 import za.co.ashtech.jaatm.bea.util.JaatmOperationException;
-import za.co.ashtech.jaatm.bea.util.UserNotFoundException;
 
 @Service
-public class UpdateUserDetailsImpl implements UpdateUserDetails {
+public class UpdateUserDetailsImpl extends BaseService implements UpdateUserDetails {
 	
-	private JaatmUserRepository jaatmUserRepository;
-	
+
 	public UpdateUserDetailsImpl(JaatmUserRepository jaatmUserRepository) {
-		super();
-		this.jaatmUserRepository = jaatmUserRepository;
+		super(jaatmUserRepository);
 	}
 
 	@Override
 	public void updateAccount(String juid, User user) {
 		try {
-			/*
-			 * Get JAATM_USER by JUID or throw a UserNotFoundException runtime exception 
-			 */
-			JaatmUser jaatmUser = jaatmUserRepository.findByJuid(juid).orElseThrow(() -> new UserNotFoundException(juid));
+
+			JaatmUser jaatmUser = getJaatmUser(juid);
 			
 			// Convert to Optional to check if value was updated
 			Optional<String> optFirstname = Optional.ofNullable(user.getFirstname());
@@ -56,7 +49,7 @@ public class UpdateUserDetailsImpl implements UpdateUserDetails {
 			});
 			
 			//Update user details
-			jaatmUserRepository.save(jaatmUser);
+			getJaatmUserRepository().save(jaatmUser);
 
 		}catch (Exception e) {
 			throw new JaatmOperationException(JaatmConstants.ERROR_CODE_100);

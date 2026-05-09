@@ -12,19 +12,14 @@ import za.co.ashtech.jaatm.bea.model.JaatmUser;
 import za.co.ashtech.jaatm.bea.repository.JaatmUserRepository;
 import za.co.ashtech.jaatm.bea.util.JaatmOperationException;
 import za.co.ashtech.jaatm.bea.util.JaatmConstants;
-import za.co.ashtech.jaatm.bea.util.UserNotFoundException;
 
 @Service
-public class ViewUserAccountDetailsImpl implements ViewUserAccountDetails {
+public class ViewUserAccountDetailsImpl extends BaseService implements ViewUserAccountDetails {
 	
-	private JaatmUserRepository jaatmUserRepository;
-	
-	public ViewUserAccountDetailsImpl(JaatmUserRepository jaatmUserRepository) {
-		super();
-		this.jaatmUserRepository = jaatmUserRepository;
+
+	protected ViewUserAccountDetailsImpl(JaatmUserRepository jaatmUserRepository) {
+		super(jaatmUserRepository);
 	}
-
-
 
 	@Override
 	public User getUserAccount(String juid){
@@ -35,7 +30,7 @@ public class ViewUserAccountDetailsImpl implements ViewUserAccountDetails {
 			/*
 			 * Get JAATM_USER by JUID or throw a UserNotFoundException runtime exception 
 			 */
-			JaatmUser jaatmUser = jaatmUserRepository.findByJuid(juid).orElseThrow(() -> new UserNotFoundException(juid));
+			JaatmUser jaatmUser = getJaatmUser(juid);
 			
 			BigDecimal amountInCents = new BigDecimal(jaatmUser.getAccount().getBalance());
 			

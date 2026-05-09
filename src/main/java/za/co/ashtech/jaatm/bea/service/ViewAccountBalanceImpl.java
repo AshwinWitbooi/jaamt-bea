@@ -11,17 +11,11 @@ import za.co.ashtech.jaatm.bea.util.JaatmConstants;
 import za.co.ashtech.jaatm.bea.util.UserNotFoundException;
 
 @Service
-public class ViewAccountBalanceImpl implements ViewAccountBalance {
-	
-	private JaatmUserRepository jaatmUserRepository;
-	
-	
-	public ViewAccountBalanceImpl(JaatmUserRepository jaatmUserRepository) {
-		super();
-		this.jaatmUserRepository = jaatmUserRepository;
+public class ViewAccountBalanceImpl extends BaseService implements ViewAccountBalance {
+
+	protected ViewAccountBalanceImpl(JaatmUserRepository jaatmUserRepository) {
+		super(jaatmUserRepository);
 	}
-
-
 
 	@Override
 	public Account getAccountBalance(String juid){
@@ -32,7 +26,7 @@ public class ViewAccountBalanceImpl implements ViewAccountBalance {
 			/*
 			 * Get JAATM_USER by JUID or throw a UserNotFoundException runtime exception 
 			 */
-			JaatmUser jaatmUser = jaatmUserRepository.findByJuid(juid).orElseThrow(() -> new UserNotFoundException(juid));
+			JaatmUser jaatmUser = getJaatmUser(juid);
 			
 			
 			// Create BigDecimal to handle converting cents and SA Rands

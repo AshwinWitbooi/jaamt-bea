@@ -14,12 +14,13 @@ import lombok.extern.slf4j.Slf4j;
 import za.co.ashtech.jaatm.bea.dto.Account;
 import za.co.ashtech.jaatm.bea.dto.AccountOpRequest;
 import za.co.ashtech.jaatm.bea.dto.AccountOpRequest.OperationEnum;
+import za.co.ashtech.jaatm.bea.dto.TransferRequest;
 import za.co.ashtech.jaatm.bea.dto.User;
 
 @Slf4j
 class JaatmBeaApplicationTests extends  BaseUnitTest{
-	
-    @Autowired
+
+	@Autowired
     private TestRestTemplate restTemplate;
 
 	@Test
@@ -147,6 +148,31 @@ class JaatmBeaApplicationTests extends  BaseUnitTest{
 	}
 	
 	@Test
+	void userAccountTransfer() {
+		
+		TransferRequest transferRequest = new TransferRequest();
+		transferRequest.setAmount("136000");
+		log.debug("--->>>:::	AMOUNT TO TRANSFER: "+transferRequest.getAmount());
+		transferRequest.setFromAccountNumber("44444222336");
+		transferRequest.setToAccountNumber("11111222336");
+		transferRequest.setTransferReference("1234987");
+		
+		// 2. Wrap headers in HttpEntity (no body for GET)
+		HttpEntity<Object> transferRequestEntity = new HttpEntity<>(transferRequest,getHeaders());
+		
+		// 3. Call exchange
+		ResponseEntity<Void> getUserResponse = restTemplate.exchange(
+		        "/api/v1/account/transfer/JUID0001",
+		        HttpMethod.POST,
+		        transferRequestEntity,
+		        Void.class
+		);
+		
+		assertEquals(HttpStatus.OK, getUserResponse.getStatusCode());		
+		
+	}
+
+	@Test
 	void userAccountWithdawal() {
 
 		AccountOpRequest accountOpRequest = new AccountOpRequest();
@@ -166,6 +192,5 @@ class JaatmBeaApplicationTests extends  BaseUnitTest{
 		assertEquals(HttpStatus.OK, getUserResponse.getStatusCode());
 		
 	}
-
 
 }
