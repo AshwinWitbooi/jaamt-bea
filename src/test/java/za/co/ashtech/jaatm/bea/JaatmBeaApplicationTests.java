@@ -3,6 +3,9 @@ package za.co.ashtech.jaatm.bea;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -14,24 +17,30 @@ import lombok.extern.slf4j.Slf4j;
 import za.co.ashtech.jaatm.bea.dto.Account;
 import za.co.ashtech.jaatm.bea.dto.AccountOpRequest;
 import za.co.ashtech.jaatm.bea.dto.AccountOpRequest.OperationEnum;
+import za.co.ashtech.jaatm.bea.repository.JaatmTransactionRepository;
 import za.co.ashtech.jaatm.bea.dto.TransferRequest;
 import za.co.ashtech.jaatm.bea.dto.User;
+import za.co.ashtech.jaatm.bea.model.JaatmTransaction;
 
 @Slf4j
 class JaatmBeaApplicationTests extends  BaseUnitTest{
 
 	@Autowired
     private TestRestTemplate restTemplate;
-
+	@Autowired
+	private JaatmTransactionRepository jaatmTransactionRepository;
+	
 	@Test
 	void getAccountBalance() {
+		
+		String juid = "JUID0001";
 		
 		// 2. Wrap headers in HttpEntity (no body for GET)
 		HttpEntity<Object> entity = new HttpEntity<>(getHeaders());
 		
 		// 3. Call exchange
 		ResponseEntity<Account> response = restTemplate.exchange(
-		        "/api/v1/account/JUID0001",
+		        "/api/v1/account/"+juid,
 		        HttpMethod.GET,
 		        entity,
 		        Account.class
@@ -41,6 +50,8 @@ class JaatmBeaApplicationTests extends  BaseUnitTest{
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull("0", response.getBody().getBalance());
+        Optional<List<JaatmTransaction>> verify = jaatmTransactionRepository.findByJuid(juid);
+        verify.ifPresent(v -> log.info("RECORD WAS FOUND"));
 	}
 	
 	
