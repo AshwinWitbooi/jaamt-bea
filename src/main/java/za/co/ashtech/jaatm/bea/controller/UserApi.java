@@ -5,6 +5,7 @@
  */
 package za.co.ashtech.jaatm.bea.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.context.request.NativeWebRequest;
-
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -24,6 +25,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Generated;
 import jakarta.validation.Valid;
+import za.co.ashtech.jaatm.bea.dto.JaatmUserTransaction;
 import za.co.ashtech.jaatm.bea.dto.User;
 import za.co.ashtech.jaatm.bea.util.JaatmOperationException;
 
@@ -94,5 +96,35 @@ public interface UserApi {
     ResponseEntity<Void> userJuidPut(
         @Parameter(name = "juid", description = "", required = true, in = ParameterIn.PATH) @PathVariable("juid") String juid,
         @Parameter(name = "User", description = "", required = true) @Valid @RequestBody User user
+    );
+    
+    /**
+     * GET /user/{juid}/transaction : Get user system transaction details for a given JUID
+     * Retrieves the user transaction details associated with the specified JUID.
+     *
+     * @param juid  (required)
+     * @return Successful response (status code 200)
+     *         or Invalid input (status code 400)
+     *         or Internal server error (status code 500)
+     */
+    @Operation(
+        operationId = "userJuidTransactionGet",
+        summary = "Get user system transaction details for a given JUID",
+        description = "Retrieves the user transaction details associated with the specified JUID.",
+        tags = { "user" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Successful response", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = JaatmUserTransaction.class)))
+            }),
+            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+        }
+    )
+    @GetMapping(
+        value = "/user/{juid}/transaction",
+        produces = { "application/json" }
+    )    
+    ResponseEntity<List<JaatmUserTransaction>> userJuidTransactionGet(
+        @Parameter(name = "juid", description = "", required = true, in = ParameterIn.PATH) @PathVariable("juid") String juid
     );
 }

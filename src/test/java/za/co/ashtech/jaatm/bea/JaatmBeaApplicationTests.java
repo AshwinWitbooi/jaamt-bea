@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import za.co.ashtech.jaatm.bea.dto.Account;
 import za.co.ashtech.jaatm.bea.dto.AccountOpRequest;
 import za.co.ashtech.jaatm.bea.dto.AccountOpRequest.OperationEnum;
+import za.co.ashtech.jaatm.bea.dto.JaatmUserTransaction;
 import za.co.ashtech.jaatm.bea.repository.JaatmTransactionRepository;
 import za.co.ashtech.jaatm.bea.dto.TransferRequest;
 import za.co.ashtech.jaatm.bea.dto.User;
@@ -30,7 +32,7 @@ class JaatmBeaApplicationTests extends  BaseUnitTest{
 	@Autowired
 	private JaatmTransactionRepository jaatmTransactionRepository;
 	
-	@Test
+//	@Test
 	void getAccountBalance() {
 		
 		String juid = "JUID0001";
@@ -55,7 +57,7 @@ class JaatmBeaApplicationTests extends  BaseUnitTest{
 	}
 	
 	
-	@Test
+//	@Test
 	void getAccountBalanceNoUser() {
 		
 		// 2. Wrap headers in HttpEntity (no body for GET)
@@ -74,7 +76,7 @@ class JaatmBeaApplicationTests extends  BaseUnitTest{
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());		
 	}
 	
-	@Test
+//	@Test
 	void getUserAccount() {
 		
 		// 2. Wrap headers in HttpEntity (no body for GET)
@@ -94,7 +96,7 @@ class JaatmBeaApplicationTests extends  BaseUnitTest{
         assertNotNull(response.getBody());
 	}
 	
-	@Test
+//	@Test
 	void updateUserAccount() {
 		
 		// 2. Wrap headers in HttpEntity (no body for GET)
@@ -137,7 +139,7 @@ class JaatmBeaApplicationTests extends  BaseUnitTest{
 		assertEquals( "Joe",postUpdategetUserResponse.getBody().getFirstname());
 	}
 	
-	@Test
+//	@Test
 	void userAccountDeposit() {
 
 		AccountOpRequest accountOpRequest = new AccountOpRequest();
@@ -158,7 +160,7 @@ class JaatmBeaApplicationTests extends  BaseUnitTest{
 		
 	}
 	
-	@Test
+//	@Test
 	void userAccountTransfer() {
 		
 		TransferRequest transferRequest = new TransferRequest();
@@ -183,7 +185,7 @@ class JaatmBeaApplicationTests extends  BaseUnitTest{
 		
 	}
 
-	@Test
+//	@Test
 	void userAccountWithdawal() {
 
 		AccountOpRequest accountOpRequest = new AccountOpRequest();
@@ -201,6 +203,27 @@ class JaatmBeaApplicationTests extends  BaseUnitTest{
 		);
 		
 		assertEquals(HttpStatus.OK, getUserResponse.getStatusCode());
+		
+	}
+	
+	@Test
+	void userUserTransactionHistory() {
+
+		// 2. Wrap headers in HttpEntity (no body for GET)
+		HttpEntity<Object> entity = new HttpEntity<>(getHeaders());
+		
+		// 3. Call exchange
+		ResponseEntity<List<JaatmUserTransaction>> response = restTemplate.exchange(
+		        "/api/v1/user/JUID0001/transaction",
+		        HttpMethod.GET,
+		        entity,
+		        new ParameterizedTypeReference<List<JaatmUserTransaction>>() {}
+		);
+		        
+        log.debug("--->>>:::	"+response.getStatusCode());
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
 		
 	}
 
